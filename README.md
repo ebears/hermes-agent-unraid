@@ -5,24 +5,26 @@ Unraid Docker templates for [Hermes Agent](https://github.com/NousResearch/herme
 ## Templates
 
 ### Hermes Agent (Official)
-- **Image:** `nousresearch/hermes-agent:latest` (official, no custom modifications)
+- **Image:** `docker.io/nousresearch/hermes-agent:latest` (official)
 - **Best for:** Quick setup, vanilla experience, always up-to-date with upstream
 - **Post Arguments:** `--gateway run`
 
 ### Hermes Agent (Full)
-- **Image:** `ghcr.io/Aralobster/hermes-agent:fix/docker-matrix-update` (auto-built from fork)
-- **Best for:** Full functionality, auto-updates when upstream changes
+- **Image:** `ghcr.io/aralobster/hermes-agent:fix-docker-matrix-update` (custom build)
+- **Best for:** Full functionality with upstream, auto-builds when upstream updates
 - **Post Arguments:** `--gateway run`
+- **Built from:** [Aralobster/hermes-agent](https://github.com/Aralobster/hermes-agent/tree/fix/docker-matrix-update)
 
 ### Differences
 
 | | Official | Full |
 |---|---|---|
-| `playwright` | Not installed | Pre-installed |
-| `markdown` | Not installed | Pre-installed |
-| `uv` | Not installed | Pre-installed |
-| Setup time | Slower first run | Faster first run |
-| Upstream updates | Immediate | Auto-built on push to fix/docker-matrix-update |
+| playwright | Pre-installed (upstream) | Pre-installed (upstream) |
+| markdown | Pre-installed (upstream) | Pre-installed (upstream) |
+| uv | **Not installed** | Pre-installed |
+| Auto-updates | With official upstream | **Auto-built on push to fix/docker-matrix-update** |
+
+The official image already includes playwright and markdown from the upstream Dockerfile. The Full image additionally includes `uv` (needed for MCP `uvx` commands) and is auto-built whenever the fork's `fix/docker-matrix-update` branch updates.
 
 ## Quick Start — Official Template
 
@@ -64,15 +66,13 @@ Both templates can be submitted to [Unraid Community Apps](https://forums.unraid
 
 ```
 .
-├── Dockerfile.unraid          # Builds the custom image for Full template
 ├── hermes-agent-official.xml  # Official image template
-├── hermes-agent-full.xml     # Custom image template
-├── README.md                  # This file
-└── hermes-icon.png           # App icon (add your own at this path)
+├── hermes-agent-full.xml     # Custom image template (GHCR auto-build)
+└── README.md                  # This file
 ```
 
 ## Docs
 
 - [Hermes Agent Docs](https://docs.hermesagent.ai/)
 - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
-- [Fork with Unraid fixes](https://github.com/Aralobster/hermes-agent)
+- [Fork with uv fix](https://github.com/Aralobster/hermes-agent)
