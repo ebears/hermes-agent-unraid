@@ -38,9 +38,9 @@
     Note: This uses a custom Docker image with playwright and markdown pre-installed.
     The image is auto-built from the fix/docker-matrix-update branch when upstream updates.
 
-    Image: ghcr.io/Aralobster/hermes-agent:fix/docker-matrix-update
+    Image: ghcr.io/aralobster/hermes-agent:fix-docker-matrix-update
   </Description>
-  <Repository>ghcr.io/Aralobster/hermes-agent:fix-docker-matrix-update</Repository>
+  <Repository>ghcr.io/aralobster/hermes-agent:fix-docker-matrix-update</Repository>
   <BindTime>false</BindTime>
   <Networking>
     <Mode>bridge</Mode>
