@@ -25,7 +25,7 @@ Unraid Docker templates for [Hermes Agent](https://github.com/NousResearch/herme
 | Setup time | Slower first run | Faster first run |
 | Upstream updates | Immediate | Auto-built on push to fix/docker-matrix-update |
 
-The official image includes playwright but is missing `markdown` and `uv`. The Full image adds both and is auto-built whenever the fork's `fix/docker-matrix-update` branch syncs with upstream.
+The official image includes playwright but is missing `markdown` and `uv`. The Full image adds both (needed for Matrix HTML rendering and MCP via `uvx`) and is auto-built whenever the fork's `fix/docker-matrix-update` branch syncs with upstream.
 
 ## Quick Start — Official Template
 
