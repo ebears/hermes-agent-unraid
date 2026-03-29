@@ -1,127 +1,40 @@
 # Hermes Agent — Unraid Templates
 
-Unraid Docker templates for [Hermes Agent](https://github.com/NousResearch/hermes-agent), a self-hosted AI agent gateway with messaging integrations (Discord, Telegram, WhatsApp, Signal, Matrix, Mattermost, SSH, and more).
+Unraid Docker templates for [Hermes Agent](https://github.com/NousResearch/hermes-agent), a self-hosted AI agent gateway with messaging integrations (Discord, Telegram, WhatsApp, Signal, Matrix, Mattermost, SSH, and more). The container is running in gateway mode and ready to be configured for most messaging clients.
 
 ## Templates
 
 ### Hermes Agent (Official)
 - **Image:** `docker.io/nousresearch/hermes-agent:latest` (official)
-- **Best for:** Quick setup, vanilla experience, always up-to-date with upstream
-- **Post Arguments:** `--gateway run`
 
 ### Hermes Agent (Unofficial Extras)
 - **Image:** `ghcr.io/aralobster/hermes-agent:fix-docker-matrix-update` (custom build)
-- **Best for:** Full functionality with upstream, auto-builds when upstream updates
-- **Post Arguments:** `--gateway run`
-- **Built from:** [Aralobster/hermes-agent](https://github.com/Aralobster/hermes-agent/tree/fix/docker-matrix-update)
+- **Note:** Based on [NousResearch/hermes-agent/main](https://github.com/NousResearch/hermes-agent), with extra dependencies installed for Matrix and MiniMax MCP. Auto-builds when upstream updates.
+- **Repo:** [Aralobster/hermes-agent](https://github.com/Aralobster/hermes-agent/tree/fix/docker-matrix-update)
 
 ### Differences
 
-|| | Official | Unofficial Extras |
+| | Official | Unofficial Extras |
 |---|---|---|
-| playwright | Pre-installed (upstream) | Pre-installed (upstream) |
-| markdown | **Not installed** | Pre-installed |
+| playwright | Pre-installed | Pre-installed |
 | uv | **Not installed** | Pre-installed |
-| Setup time | Faster first run | Slower first run (more layers) |
-| Upstream updates | Immediate | Auto-built on push to fix/docker-matrix-update |
+| matrix (pip) | **Not installed** | Pre-installed |
+| markdown (pip) | **Not installed** | Pre-installed |
+| Updates | upstream | Updates from [Aralobster/hermes-agent (Unofficial)](https://github.com/Aralobster/hermes-agent/tree/fix/docker-matrix-update) |
 
-The official image includes playwright but is missing `markdown` and `uv`. The Unofficial Extras image adds both (needed for Matrix HTML rendering and MCP via `uvx`) and is auto-built whenever the fork's `fix/docker-matrix-update` branch syncs with upstream.
+The official image includes playwright but is missing a few pip installs needed for Matrix (`-e [matrix]`, and `markdown`), as well as `uv` for use with the [MiniMax MCP](https://platform.minimax.io/docs/token-plan/mcp-guide). The Unofficial Extras image adds both and is auto-built whenever the fork's `fix/docker-matrix-update` branch syncs with upstream.
 
-## Quick Start — Official Template
+## Quick Start
 
-### Before you start
-
-You must create two files **before** running the container for the first time — the container uses `hermes gateway run` (not the interactive `hermes setup`), so there is no guided first-run walkthrough.
-
-**1. `/opt/data/.env`** — at your mapped host path (e.g. `/mnt/user/appdata/hermes-agent/.env`):
-```
-# Required: your LLM provider API key
-MINIMAX_API_KEY=***
-
-# Optional: provider model override
-# MINIMAX_MODEL=***
-
-# Matrix credentials (if using Matrix)
-MATRIX_HOMESERVER=https://matrix.yourdomain.com
-MATRIX_ACCESS_TOKEN=***
-MATRIX_USER_ID=@youruser:matrix.yourdomain.com
-```
-
-**2. `/opt/data/config.yaml`** — at your mapped host path:
-```yaml
-display:
-  skin: default
-
-platforms:
-  matrix:
-    enabled: true
-```
-
-### Install
-
-1. Download `hermes-agent-official.xml` to `/boot/config/docker.d/` on your Unraid server
-2. In the Docker UI:
-   - Set **Post Arguments**: `--gateway run`
-   - Add a **Config** path mapping: `/opt/data` → your host path (e.g. `/mnt/user/appdata/hermes-agent`)
-3. Start the container
-4. Monitor logs with `docker logs hermes-agent` — if it crashes, your `.env` or `config.yaml` is misconfigured
-5. Once running without errors, send a message to your Matrix bot user ID to verify the connection
-
-## Unofficial Extras Template Setup
-
-The Unofficial Extras template pulls from a GHCR image that is auto-built from the
-[fix/docker-matrix-update](https://github.com/Aralobster/hermes-agent/tree/fix/docker-matrix-update) branch
-whenever it updates.
-
-To update: push to the `fix/docker-matrix-update` branch on the
-[Aralobster/hermes-agent](https://github.com/Aralobster/hermes-agent) fork, then
-set the container to pull the latest image in the Docker UI.
-
-### Before you start
-
-You must create two files **before** running the container for the first time — the container uses `hermes gateway run` (not the interactive `hermes setup`), so there is no guided first-run walkthrough.
+You must edit two files inside the Data (internal: /opt/data/) folder of the container — the container uses `hermes gateway run` (not the interactive `hermes setup`), so there is no guided first-run walkthrough.
 
 **1. `/opt/data/.env`** — at your mapped host path (e.g. `/mnt/user/appdata/hermes-agent/.env`):
-```
-# Required: your LLM provider API key
-MINIMAX_API_KEY=***
+  - Example here: [.env.example](https://raw.githubusercontent.com/NousResearch/hermes-agent/refs/heads/main/.env.example)
+  - Add at minimum an LLM provider key. ([Guide](https://hermes-agent.nousresearch.com/docs/getting-started/installation#step-7-add-your-api-keys))
 
-# Optional: provider model override
-# MINIMAX_MODEL=***
-
-# Matrix credentials (if using Matrix)
-MATRIX_HOMESERVER=https://matrix.yourdomain.com
-MATRIX_ACCESS_TOKEN=***
-MATRIX_USER_ID=@youruser:matrix.yourdomain.com
-```
-
-**2. `/opt/data/config.yaml`** — at your mapped host path:
-```yaml
-display:
-  skin: default
-
-platforms:
-  matrix:
-    enabled: true
-```
-
-### Install
-
-1. Download `hermes-agent-unofficial-extras.xml` to `/boot/config/docker.d/` on your Unraid server
-2. In the Docker UI:
-   - Set **Post Arguments**: `--gateway run`
-   - Add a **Config** path mapping: `/opt/data` → your host path (e.g. `/mnt/user/appdata/hermes-agent`)
-3. Start the container
-4. Monitor logs with `docker logs hermes-agent` — if it crashes, your `.env` or `config.yaml` is misconfigured
-5. Once running without errors, send a message to your Matrix bot user ID to verify the connection
-
-## Community Apps Submission
-
-Both templates can be submitted to [Unraid Community Apps](https://forums.unraid.net/forum/83/community-apps/).
-
-1. Create a thread in the Community Apps forum
-2. Include the XML files and a brief description
-3. Follow the [CA submission guidelines](https://forums.unraid.net/topic/89926-community-applications-repository-requirements/)
+**2. `/opt/data/config.yaml`** — at your mapped host path (same path as the .env):
+  - Let this generate after first run.
+  - Configure afterwards (the same options from the `.env` take precedence in the `config.yaml`)
 
 ## Files
 
