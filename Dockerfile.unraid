@@ -1,9 +1,0 @@
-FROM nousresearch/hermes-agent:latest
-
-# Add missing dependencies for single-stage Dockerfile on Unraid
-# - markdown: for Matrix HTML rendering in gateway
-# - uv: for MCP uvx command
-# - playwright: optional, for browser automation (dogfood skill)
-RUN pip install --no-cache-dir --break-system-packages markdown uv \
-    && npm install \
-    && npx playwright install --with-deps chromium

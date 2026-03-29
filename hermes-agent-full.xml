@@ -3,25 +3,26 @@
   <!--
     Hermes Agent - Full (Custom Build)
     https://github.com/NousResearch/hermes-agent
-    Custom image: https://github.com/ebears/hermes-agent-unraid
+    Custom image: https://github.com/Aralobster/hermes-agent/pkgs/container/hermes-agent
 
     Template: https://github.com/ebears/hermes-agent-unraid
 
     Notes:
     - This uses a custom Docker image with additional dependencies pre-installed:
-      playwright (browser automation), markdown (Matrix HTML rendering)
-    - Build the custom image first — see Dockerfile.unraid in this repo
+      playwright (browser automation), markdown (Matrix HTML rendering), uv (MCP tools)
+    - Image is auto-built from fix/docker-matrix-update branch via GitHub Actions
     - Run interactively: set Post Arguments to --gateway run
     - First run: the container will walk you through initial setup (API keys, chat platform config)
     - Restart after configuring /opt/data/.env to apply changes
 
     Setup:
-    1. Build and push the custom image first — see README.unraid.md in this repo
-    2. Update the Repository field below to point to your custom image
-    3. Download this XML to /boot/config/docker.d/hermes-agent-full.xml on your Unraid server
-    4. In the Docker UI, set Post Arguments: --gateway run
-    5. Map /opt/data to a host path for persistence (e.g. /mnt/user/appdata/hermes-agent)
-    6. Start the container and follow the logs for first-run setup instructions
+    1. Download this XML to /boot/config/docker.d/hermes-agent-full.xml on your Unraid server
+    2. In the Docker UI, set Post Arguments: --gateway run
+    3. Map /opt/data to a host path for persistence (e.g. /mnt/user/appdata/hermes-agent)
+    4. Start the container and follow the logs for first-run setup instructions
+
+    Updating: When a new image is pushed to GHCR, set the container to pull the latest image
+    in the Docker UI.
 
     Docs: https://docs.hermesagent.ai/
   -->
@@ -34,12 +35,12 @@
     First run: the container will walk you through initial setup (API keys, chat platform config).
     Restart after configuring /opt/data/.env to apply changes.
 
-    Note: This requires the custom Docker image to be built first.
-    See README.unraid.md in https://github.com/ebears/hermes-agent-unraid for instructions.
+    Note: This uses a custom Docker image with playwright and markdown pre-installed.
+    The image is auto-built from the fix/docker-matrix-update branch when upstream updates.
 
-    Image: docker.io/aralobster/hermes-agent:latest (build this first — see repo)
+    Image: ghcr.io/Aralobster/hermes-agent:fix/docker-matrix-update
   </Description>
-  <Repository>docker.io/aralobster/hermes-agent:latest</Repository>
+  <Repository>ghcr.io/Aralobster/hermes-agent:fix/docker-matrix-update</Repository>
   <BindTime>false</BindTime>
   <Networking>
     <Mode>bridge</Mode>

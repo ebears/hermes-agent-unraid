@@ -10,9 +10,8 @@ Unraid Docker templates for [Hermes Agent](https://github.com/NousResearch/herme
 - **Post Arguments:** `--gateway run`
 
 ### Hermes Agent (Full)
-- **Image:** `docker.io/aralobster/hermes-agent:latest` (custom build, pre-installs dependencies)
-- **Best for:** Full functionality without rebuild delays
-- **Requires:** One-time custom image build (see below)
+- **Image:** `ghcr.io/Aralobster/hermes-agent:fix/docker-matrix-update` (auto-built from fork)
+- **Best for:** Full functionality, auto-updates when upstream changes
 - **Post Arguments:** `--gateway run`
 
 ### Differences
@@ -21,8 +20,9 @@ Unraid Docker templates for [Hermes Agent](https://github.com/NousResearch/herme
 |---|---|---|
 | `playwright` | Not installed | Pre-installed |
 | `markdown` | Not installed | Pre-installed |
+| `uv` | Not installed | Pre-installed |
 | Setup time | Slower first run | Faster first run |
-| Upstream updates | Immediate | Requires rebuild |
+| Upstream updates | Immediate | Auto-built on push to fix/docker-matrix-update |
 
 ## Quick Start — Official Template
 
@@ -36,24 +36,13 @@ Unraid Docker templates for [Hermes Agent](https://github.com/NousResearch/herme
 
 ## Full Template Setup
 
-### 1. Build the custom image
+The Full template pulls from a GHCR image that is auto-built from the
+[fix/docker-matrix-update](https://github.com/Aralobster/hermes-agent/tree/fix/docker-matrix-update) branch
+whenever it updates.
 
-The Full template requires a custom Docker image to be built and pushed first.
-
-```bash
-# Clone this repo
-git clone https://github.com/ebears/hermes-agent-unraid.git
-cd hermes-agent-unraid
-
-# Authenticate with Docker Hub (or GHCR)
-docker login
-
-# Build and push
-docker build -t docker.io/aralobster/hermes-agent:latest -f Dockerfile.unraid .
-docker push docker.io/aralobster/hermes-agent:latest
-```
-
-### 2. Install the template
+To update: push to the `fix/docker-matrix-update` branch on the
+[Aralobster/hermes-agent](https://github.com/Aralobster/hermes-agent) fork, then
+set the container to pull the latest image in the Docker UI.
 
 1. Download `hermes-agent-full.xml` to `/boot/config/docker.d/` on your Unraid server
 2. In the Docker UI:
@@ -62,19 +51,6 @@ docker push docker.io/aralobster/hermes-agent:latest
 3. Start the container — follow the logs for first-run setup
 4. Edit `/opt/data/.env` (at your mapped host path) with your API keys and platform credentials
 5. Restart the container to apply
-
-### Updating the Full image
-
-When Hermes Agent releases a new version:
-
-```bash
-cd hermes-agent-unraid
-docker pull nousresearch/hermes-agent:latest
-docker build -t docker.io/aralobster/hermes-agent:latest -f Dockerfile.unraid .
-docker push docker.io/aralobster/hermes-agent:latest
-```
-
-Then in Unraid, set the container to pull the latest image.
 
 ## Community Apps Submission
 
