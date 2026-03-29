@@ -29,13 +29,43 @@ The official image includes playwright but is missing `markdown` and `uv`. The F
 
 ## Quick Start — Official Template
 
+### Before you start
+
+You must create two files **before** running the container for the first time — the container uses `hermes gateway run` (not the interactive `hermes setup`), so there is no guided first-run walkthrough.
+
+**1. `/opt/data/.env`** — at your mapped host path (e.g. `/mnt/user/appdata/hermes-agent/.env`):
+```
+# Required: your LLM provider API key
+MINIMAX_API_KEY=***
+
+# Optional: provider model override
+# MINIMAX_MODEL=***
+
+# Matrix credentials (if using Matrix)
+MATRIX_HOMESERVER=https://matrix.yourdomain.com
+MATRIX_ACCESS_TOKEN=***
+MATRIX_USER_ID=@youruser:matrix.yourdomain.com
+```
+
+**2. `/opt/data/config.yaml`** — at your mapped host path:
+```yaml
+display:
+  skin: default
+
+platforms:
+  matrix:
+    enabled: true
+```
+
+### Install
+
 1. Download `hermes-agent-official.xml` to `/boot/config/docker.d/` on your Unraid server
 2. In the Docker UI:
    - Set **Post Arguments**: `--gateway run`
    - Add a **Config** path mapping: `/opt/data` → your host path (e.g. `/mnt/user/appdata/hermes-agent`)
-3. Start the container — follow the logs for first-run setup
-4. Edit `/opt/data/.env` (at your mapped host path) with your API keys and platform credentials
-5. Restart the container to apply
+3. Start the container
+4. Monitor logs with `docker logs hermes-agent` — if it crashes, your `.env` or `config.yaml` is misconfigured
+5. Once running without errors, send a message to your Matrix bot user ID to verify the connection
 
 ## Full Template Setup
 
@@ -47,13 +77,43 @@ To update: push to the `fix/docker-matrix-update` branch on the
 [Aralobster/hermes-agent](https://github.com/Aralobster/hermes-agent) fork, then
 set the container to pull the latest image in the Docker UI.
 
+### Before you start
+
+You must create two files **before** running the container for the first time — the container uses `hermes gateway run` (not the interactive `hermes setup`), so there is no guided first-run walkthrough.
+
+**1. `/opt/data/.env`** — at your mapped host path (e.g. `/mnt/user/appdata/hermes-agent/.env`):
+```
+# Required: your LLM provider API key
+MINIMAX_API_KEY=***
+
+# Optional: provider model override
+# MINIMAX_MODEL=***
+
+# Matrix credentials (if using Matrix)
+MATRIX_HOMESERVER=https://matrix.yourdomain.com
+MATRIX_ACCESS_TOKEN=***
+MATRIX_USER_ID=@youruser:matrix.yourdomain.com
+```
+
+**2. `/opt/data/config.yaml`** — at your mapped host path:
+```yaml
+display:
+  skin: default
+
+platforms:
+  matrix:
+    enabled: true
+```
+
+### Install
+
 1. Download `hermes-agent-full.xml` to `/boot/config/docker.d/` on your Unraid server
 2. In the Docker UI:
    - Set **Post Arguments**: `--gateway run`
    - Add a **Config** path mapping: `/opt/data` → your host path (e.g. `/mnt/user/appdata/hermes-agent`)
-3. Start the container — follow the logs for first-run setup
-4. Edit `/opt/data/.env` (at your mapped host path) with your API keys and platform credentials
-5. Restart the container to apply
+3. Start the container
+4. Monitor logs with `docker logs hermes-agent` — if it crashes, your `.env` or `config.yaml` is misconfigured
+5. Once running without errors, send a message to your Matrix bot user ID to verify the connection
 
 ## Community Apps Submission
 

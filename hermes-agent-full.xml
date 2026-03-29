@@ -12,14 +12,16 @@
       playwright (browser automation), markdown (Matrix HTML rendering), uv (MCP tools)
     - Image is auto-built from fix/docker-matrix-update branch via GitHub Actions
     - Run interactively: set Post Arguments to --gateway run
-    - First run: the container will walk you through initial setup (API keys, chat platform config)
-    - Restart after configuring /opt/data/.env to apply changes
+    - IMPORTANT: You must create /opt/data/.env and /opt/data/config.yaml BEFORE starting the
+      container. There is no interactive first-run setup — the container starts directly into
+      gateway mode. See the README at https://github.com/ebears/hermes-agent-unraid
 
     Setup:
     1. Download this XML to /boot/config/docker.d/hermes-agent-full.xml on your Unraid server
-    2. In the Docker UI, set Post Arguments: --gateway run
-    3. Map /opt/data to a host path for persistence (e.g. /mnt/user/appdata/hermes-agent)
-    4. Start the container and follow the logs for first-run setup instructions
+    2. Create /opt/data/.env and /opt/data/config.yaml at your mapped host path (see README)
+    3. In the Docker UI, set Post Arguments: --gateway run
+    4. Map /opt/data to a host path for persistence (e.g. /mnt/user/appdata/hermes-agent)
+    5. Start the container and monitor logs: docker logs hermes-agent
 
     Updating: When a new image is pushed to GHCR, set the container to pull the latest image
     in the Docker UI.
@@ -32,10 +34,10 @@
 
     Supports: Discord, Telegram, WhatsApp, Signal, Matrix, Mattermost, SSH, and more.
 
-    First run: the container will walk you through initial setup (API keys, chat platform config).
-    Restart after configuring /opt/data/.env to apply changes.
+    IMPORTANT: Create /opt/data/.env and /opt/data/config.yaml before starting the container.
+    There is no interactive first-run setup. See README at https://github.com/ebears/hermes-agent-unraid
 
-    Note: This uses a custom Docker image with playwright and markdown pre-installed.
+    Note: This uses a custom Docker image with playwright, markdown, and uv pre-installed.
     The image is auto-built from the fix/docker-matrix-update branch when upstream updates.
 
     Image: ghcr.io/aralobster/hermes-agent:fix-docker-matrix-update
