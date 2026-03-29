@@ -40,7 +40,7 @@
 
     Image: ghcr.io/Aralobster/hermes-agent:fix/docker-matrix-update
   </Description>
-  <Repository>ghcr.io/Aralobster/hermes-agent:fix/docker-matrix-update</Repository>
+  <Repository>ghcr.io/Aralobster/hermes-agent:fix-docker-matrix-update</Repository>
   <BindTime>false</BindTime>
   <Networking>
     <Mode>bridge</Mode>
