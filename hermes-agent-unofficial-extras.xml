@@ -17,7 +17,7 @@
       gateway mode. See the README at https://github.com/ebears/hermes-agent-unraid
 
     Setup:
-    1. Download this XML to /boot/config/docker.d/hermes-agent-full.xml on your Unraid server
+    1. Download this XML to /boot/config/docker.d/hermes-agent-unofficial-extras.xml on your Unraid server
     2. Create /opt/data/.env and /opt/data/config.yaml at your mapped host path (see README)
     3. In the Docker UI, set Post Arguments: --gateway run
     4. Map /opt/data to a host path for persistence (e.g. /mnt/user/appdata/hermes-agent)
@@ -28,7 +28,7 @@
 
     Docs: https://docs.hermesagent.ai/
   -->
-  <Name>Hermes Agent (Full)</Name>
+  <Name>Hermes Agent (Unofficial Extras)</Name>
   <Description>
     Self-hosted AI agent gateway with messaging integrations.
 
@@ -37,8 +37,9 @@
     IMPORTANT: Create /opt/data/.env and /opt/data/config.yaml before starting the container.
     There is no interactive first-run setup. See README at https://github.com/ebears/hermes-agent-unraid
 
-    Note: This uses a custom Docker image with playwright, markdown, and uv pre-installed.
-    The image is auto-built from the fix/docker-matrix-update branch when upstream updates.
+    Note: This uses a custom Docker image with playwright, markdown, and uv pre-installed
+    (not in the official image). The image is auto-built from the fix/docker-matrix-update
+    branch when upstream updates.
 
     Image: ghcr.io/aralobster/hermes-agent:fix-docker-matrix-update
   </Description>

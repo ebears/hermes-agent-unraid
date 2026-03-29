@@ -9,7 +9,7 @@ Unraid Docker templates for [Hermes Agent](https://github.com/NousResearch/herme
 - **Best for:** Quick setup, vanilla experience, always up-to-date with upstream
 - **Post Arguments:** `--gateway run`
 
-### Hermes Agent (Full)
+### Hermes Agent (Unofficial Extras)
 - **Image:** `ghcr.io/aralobster/hermes-agent:fix-docker-matrix-update` (custom build)
 - **Best for:** Full functionality with upstream, auto-builds when upstream updates
 - **Post Arguments:** `--gateway run`
@@ -17,7 +17,7 @@ Unraid Docker templates for [Hermes Agent](https://github.com/NousResearch/herme
 
 ### Differences
 
-| | Official | Full |
+|| | Official | Unofficial Extras |
 |---|---|---|
 | playwright | Pre-installed (upstream) | Pre-installed (upstream) |
 | markdown | **Not installed** | Pre-installed |
@@ -25,7 +25,7 @@ Unraid Docker templates for [Hermes Agent](https://github.com/NousResearch/herme
 | Setup time | Faster first run | Slower first run (more layers) |
 | Upstream updates | Immediate | Auto-built on push to fix/docker-matrix-update |
 
-The official image includes playwright but is missing `markdown` and `uv`. The Full image adds both (needed for Matrix HTML rendering and MCP via `uvx`) and is auto-built whenever the fork's `fix/docker-matrix-update` branch syncs with upstream.
+The official image includes playwright but is missing `markdown` and `uv`. The Unofficial Extras image adds both (needed for Matrix HTML rendering and MCP via `uvx`) and is auto-built whenever the fork's `fix/docker-matrix-update` branch syncs with upstream.
 
 ## Quick Start — Official Template
 
@@ -67,9 +67,9 @@ platforms:
 4. Monitor logs with `docker logs hermes-agent` — if it crashes, your `.env` or `config.yaml` is misconfigured
 5. Once running without errors, send a message to your Matrix bot user ID to verify the connection
 
-## Full Template Setup
+## Unofficial Extras Template Setup
 
-The Full template pulls from a GHCR image that is auto-built from the
+The Unofficial Extras template pulls from a GHCR image that is auto-built from the
 [fix/docker-matrix-update](https://github.com/Aralobster/hermes-agent/tree/fix/docker-matrix-update) branch
 whenever it updates.
 
@@ -107,7 +107,7 @@ platforms:
 
 ### Install
 
-1. Download `hermes-agent-full.xml` to `/boot/config/docker.d/` on your Unraid server
+1. Download `hermes-agent-unofficial-extras.xml` to `/boot/config/docker.d/` on your Unraid server
 2. In the Docker UI:
    - Set **Post Arguments**: `--gateway run`
    - Add a **Config** path mapping: `/opt/data` → your host path (e.g. `/mnt/user/appdata/hermes-agent`)
@@ -128,7 +128,7 @@ Both templates can be submitted to [Unraid Community Apps](https://forums.unraid
 ```
 .
 ├── hermes-agent-official.xml  # Official image template
-├── hermes-agent-full.xml     # Custom image template (GHCR auto-build)
+├── hermes-agent-unofficial-extras.xml  # Custom image template (GHCR auto-build)
 └── README.md                  # This file
 ```
 

@@ -32,7 +32,7 @@
     There is no interactive first-run setup. See README at https://github.com/ebears/hermes-agent-unraid
 
     Note: This uses the official nousresearch/hermes-agent:latest image. For a version with
-    additional dependencies pre-installed, use "Hermes Agent (Full)" instead.
+    additional dependencies (markdown, uv) pre-installed, use "Hermes Agent (Unofficial Extras)" instead.
 
     Image: docker.io/nousresearch/hermes-agent:latest
   </Description>
